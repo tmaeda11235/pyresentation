@@ -1,0 +1,45 @@
+\author{Th. Anker}
+\title{Liner and nonliner dynamics of matter vawe packets in periodic potentials}
+\begin{document}
+\frame{\titlepage}
+予備知識:
+    ボースアインシュタイン凝縮(BEC):
+        Bose粒子の集合:i
+            同じ状態を取ることができる
+            基底状態に詰め込まれる
+        低エネルギー状態では？:i
+            基底状態をとる
+            BEC
+    周期ポテンシャル:
+        波束が非線形な伝搬をする:i
+            強いポテンシャル→平均場近似
+            弱いポテンシャル→バンド理論
+        有効質量が負になることがある
+概要:
+    周期ポテンシャル内の物質波を調べる:
+        実験:i
+            BECで波束を作った
+            レーザー場で周期ポテンシャルを作った
+        解析:i
+            最初は分子分子相関の影響が強い
+            時間が経つと線形な拡散に近づく
+有効質量:
+    定義:
+        郡速度:m
+            v_g(q) = \frac{1}{\hbar}\frac{\partial E}{\partial q}
+        有効質量:m
+            m_{eff} = \hbar^2 \left(\frac{\partial^2 E}{\partial q^2}\right)^{-1}
+        ただし、$q$はBloch波
+有効質量:
+    自由粒子では？:
+        有効質量は質量と一致する:m
+            E_{free} = \hbar \omega = \frac{\hbar^2}{2m}k^2
+    特殊な状態:
+        $E$のエネルギー分散が上に凸の場合:i
+            有効質量が負
+%画像を入れる
+実験の設定:
+    試料:
+        $^87Rb$:i
+            BEC状態のもの
+\end{document}
