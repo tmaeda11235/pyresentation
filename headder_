@@ -1,0 +1,120 @@
+\documentclass[unicode, 12pt, aspectratio=169]{beamer}
+
+
+
+\usepackage{luatexja}
+\usepackage{ifxetex,ifluatex}
+\usepackage{unicode-math}
+\usepackage{graphicx, amsmath, cite, ascmac, amsfonts}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usetheme{default}
+\usecolortheme{dove}
+
+\setbeamerfont{title}{size*={22}{28}}%
+\setbeamerfont{author}{size*={14}{16}}%
+\setbeamerfont{institute}{size*={13}{15}}%
+\setbeamertemplate{title page}{}
+\addtobeamertemplate{title page}{%
+    \begin{beamercolorbox}[center]{title}%
+        \newline%
+        \usebeamerfont{title}\inserttitle\newline\newline\newline\newline%
+        \usebeamerfont{author}\insertauthor\newline\newline%
+        \usebeamerfont{institute}\insertinstitute\newline\newline%
+        \usebeamerfont{normal text}\insertdate%
+    \end{beamercolorbox}
+}
+
+\setbeamertemplate{frametitle}{%
+    \begin{center}%
+        \insertframetitle%
+    \end{center}
+}
+\setbeamerfont{frametitle}{size={\fontsize{18}{14}}}
+
+\setbeamertemplate{navigation symbols}{}
+\addtobeamertemplate{navigation symbols}{}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+    {\ifnum\value{page}=1%
+        {}%
+    \else%
+        {\insertframenumber}%
+    \fi}%
+    \hspace{.5em}%
+    \vspace{.5em}
+}
+
+\setbeamertemplate{framesubtitle}
+{\underline{\insertframesubtitle}
+}
+\setbeamerfont{framesubtitle}{series=\bfseries}
+
+\setbeamertemplate{framesubsubtitle}
+{\underline{\insertframesubsubtitle}
+}
+
+\setbeamertemplate{enumerate item}{}
+\addtobeamertemplate{enumerate item}{}{%
+    \usebeamerfont{normal text}%
+    \usebeamercolor[fg]{normal text}%
+    {(}\insertenumlabel{)}
+}
+
+\setbeamertemplate{enumerate subitem}{}
+\addtobeamertemplate{enumerate subitem}{}{%
+    \usebeamerfont{normal text}%
+    \usebeamercolor[fg]{normal text}%
+    {(}\Alph{enumii}{)}
+}
+
+\setbeamertemplate{enumerate subsubitem}{}
+\addtobeamertemplate{enumerate subsubitem}{}{%
+    \usebeamerfont{normal text}%
+    \usebeamercolor[fg]{normal text}%
+    {(}\alph{enumiii}{)}
+}
+
+\setbeamercolor{footline}{fg=black}
+\setbeamerfont{footline}{size={\fontsize{12}{12}}}
+
+\setbeamerfont{block body}{size={\fontsize{12}{12}}}
+
+\setbeamerfont{item}{size={\fontsize{12}{12}}}
+
+\setbeamerfont{itemize item}{size*={12}{12}}
+\setbeamerfont{itemize subitem}{size*={12}{12}}
+\setbeamerfont{itemize subsubitem}{size*={12}{12}}
+
+\setbeamerfont{itemize/enumerate body}{size*={12}{12}}
+\setbeamerfont{itemize/enumerate subbody}{size*={12}{12}}
+\setbeamerfont{itemize/enumerate subsubbody}{size*={12}{12}}
+
+\setbeamercolor{alerted text}{fg=red}
+\newcommand{\boxalert}[1]{{%
+    \usebeamerfont{normal text}%
+    \usebeamercolor[fg]{alerted text}%
+    \underline{#1}
+}}
+
+%\setbeamerfont{enumerate item}{size={\fontsize{12}{12}}}
+
+%\setbeamerfont{block title}{size={\fontsize{12}{12}}}
+
+\setbeamerfont{normal text}{size={\fontsize{12}{12}}}
+
+
+
+\makeatletter
+\newcommand{\tref}[1]{Table.~\ref{#1}}
+\newcommand{\eref}[1]{Eq.~(\ref{#1})}
+\newcommand{\fref}[1]{Fig.~\ref{#1}}
+\renewcommand{\theequation}{
+  \thesection.\arabic{equation}}
+\@addtoreset{equation}{chapter}
+\def\cite#1{\textsubscript{#1}}
+%\def\section{\newpage\@startsection {section}{2}{\z@}{3truemm}{3truemm}{\Large\bf}}
+\makeatother
+%\AtBeginSection[]{
+%  \frame{\tableofcontents[currentsection, hideallsubsections]}
+%}
+
