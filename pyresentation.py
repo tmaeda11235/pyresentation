@@ -3,7 +3,8 @@ import os.path
 import coder
 
 
-headderpath = os.path.abspath("headder_")
+scriptpath = os.path.dirname(__file__)
+headderpath = os.path.abspath(os.path.join(scriptpath, "headder_"))
 with open(headderpath) as f:
     line = f.readline()
     while line:
