@@ -1,6 +1,11 @@
 Name,Marker,Tag,Content,ContentEnd,TagEnd
+pure,0,@text,@text,,
+frame,1,\begin{frame}{@text},@text,\\,\end{frame}
+block,2,\begin{block}{@text},@text,\\,\end{block}
 pure,p,@text,@text,,
 frame,f,\begin{frame}{@text},@text,\\,\end{frame}
 block,b,\begin{block}{@text},@text,\\,\end{block}
 itemize,i,@text@@\begin{itemize},\item @text,,\end{itemize}
+enumerate,e,@text@@\begin{enumerate},\item @text,,\end{enumerate}
 align,m,@text@@\begin{flalign*},&@text&,\\,\end{flalign*}
+graphics,g,\includegraphics{@text},,,

@@ -3,7 +3,7 @@ from os.path import exists
 from pprint import PrettyPrinter
 
 
-class prompter:
+class Prompter:
     marker = dict()
     tag = dict()
     content = dict()
@@ -25,10 +25,10 @@ class prompter:
             for plain_data in reader:
                 data = cls.parse(plain_data)
                 cls.marker[data["Marker"]] = data["Name"]
-                cls.tag[data["Name"]] = data["Tag"] + "\n"
-                cls.content[data["Name"]] = data["Content"]
+                cls.tag[data["Name"]] = "{0}" + data["Tag"]
+                cls.content[data["Name"]] = "{0}" + data["Content"]
                 cls.content_end[data["Name"]] = data["ContentEnd"] + "\n"
-                cls.tag_end[data["Name"]] = "\n" + data["TagEnd"] + "\n"
+                cls.tag_end[data["Name"]] = data["TagEnd"] + "\n"
         cls.loaded = True
 
     @classmethod
@@ -36,12 +36,22 @@ class prompter:
         return {key: data[key]
                 .replace("{", "{{")
                 .replace("}", "}}")
-                .replace("@@", "\n{w}")
-                .replace("@text", "{text}")
+                .replace("@@", "\n{0}")
+                .replace("@text", "{1}")
                 for key in data}
 
 
 if __name__ == "__main__":
-    prompter()
+    Prompter()
+    text = "{:X^10}".format("test")
+    w = 4 * " "
     pp = PrettyPrinter()
-    pp.pprint(prompter.__dict__)
+    pp.pprint(Prompter.__dict__)
+    print("{:!^50}\n\n\n".format("format test"))
+    for key in Prompter.tag:
+        print("\n\n\n{:=^50}\n".format(key))
+        print(Prompter.tag[key].format(w, text), "\n", end="")
+        print(Prompter.content[key].format(w, text), end="")
+        print(Prompter.content_end[key].format(w, text), end="")
+        print(Prompter.content[key].format(w, text), end="")
+        print("\n" + w, Prompter.tag_end[key].format(w, text), end="")
