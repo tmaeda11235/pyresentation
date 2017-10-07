@@ -1,0 +1,47 @@
+from csv import DictReader
+from os.path import exists
+from pprint import PrettyPrinter
+
+
+class prompter:
+    marker = dict()
+    tag = dict()
+    content = dict()
+    content_end = dict()
+    tag_end = dict()
+    loaded = False
+
+    def __new__(cls):
+        if not cls.loaded:
+            cls.load()
+        return super().__new__(cls)
+
+    @classmethod
+    def load(cls):
+        if not exists("format.csv"):
+            raise FileNotFoundError
+        with open("format.csv", newline="") as f:
+            reader = DictReader(f)
+            for plain_data in reader:
+                data = cls.parse(plain_data)
+                cls.marker[data["Marker"]] = data["Name"]
+                cls.tag[data["Name"]] = data["Tag"] + "\n"
+                cls.content[data["Name"]] = data["Content"]
+                cls.content_end[data["Name"]] = data["ContentEnd"] + "\n"
+                cls.tag_end[data["Name"]] = "\n" + data["TagEnd"] + "\n"
+        cls.loaded = True
+
+    @classmethod
+    def parse(cls, data):
+        return {key: data[key]
+                .replace("{", "{{")
+                .replace("}", "}}")
+                .replace("@@", "\n{w}")
+                .replace("@text", "{text}")
+                for key in data}
+
+
+if __name__ == "__main__":
+    prompter()
+    pp = PrettyPrinter()
+    pp.pprint(prompter.__dict__)
