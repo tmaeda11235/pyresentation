@@ -1,16 +1,20 @@
 from csv import DictReader
 from os.path import exists
+from typing import Dict
+
+
+TagDict = Dict[str, str]
 
 
 class Prompter:
-    marker = dict()
-    tag = dict()
-    content = dict()
-    content_end = dict()
-    tag_end = dict()
+    marker = dict()  # type: TagDict
+    tag = dict()  # type: TagDict
+    content = dict()  # type: TagDict
+    content_end = dict()  # type: TagDict
+    tag_end = dict()  # type: TagDict
     loaded = False
 
-    def __new__(cls):
+    def __new__(cls) -> object:
         if not cls.loaded:
             cls.load()
         return super().__new__(cls)
@@ -31,7 +35,7 @@ class Prompter:
         cls.loaded = True
 
     @classmethod
-    def parse(cls, data):
+    def parse(cls, data: dict) -> dict:
         return {key: data[key]
                 .replace("{", "{{")
                 .replace("}", "}}")
@@ -47,11 +51,12 @@ if __name__ == "__main__":
     w = 4 * " "
     pp = PrettyPrinter()
     # pp.pprint(Prompter.__dict__)
-    print("{:!^50}\n\n\n".format("format test"))
+    print("{:!^50}".format("format test"))
     for key in Prompter.tag:
-        print("\n\n\n{:=^50}\n".format(key))
+        print("{:=^50}\n".format(key))
         print(Prompter.tag[key].format(w, text), "\n", end="")
         print(Prompter.content[key].format(w, text), end="")
         print(Prompter.content_end[key].format(w, text), end="")
         print(Prompter.content[key].format(w, text), end="")
         print("\n" + w, Prompter.tag_end[key].format(w, text), end="")
+        print("\n\n\n")

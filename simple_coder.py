@@ -4,12 +4,12 @@ from prompter import Prompter
 
 class Coder(Parser):
 
-    def white_space(self, i=0):
+    def white_space(self, i=0) -> str:
         indent = self.indent
         add = i * 4
         return (indent + add) * " "
 
-    def close_line(self):
+    def close_line(self) -> str:
         w = self.white_space
         text = self.text
         if self.gain < 0:
@@ -30,7 +30,7 @@ class Coder(Parser):
         if self.gain > 0:
             return "\n"
 
-    def open_line(self):
+    def open_line(self) -> str:
         w = self.white_space
         text = self.text
         if self.now_level == 0:
@@ -41,13 +41,13 @@ class Coder(Parser):
         else:
             return Prompter.content[self.tag[-1]].format(w(), text)
 
-    def code(self):
+    def code(self) -> str:
         if self.blankline():
             return ""
         code = self.close_line() + self.open_line()
         return "".join(code)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return super().__str__() + "\ncode:{}".format(self.code())
 
 
