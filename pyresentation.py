@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 import sys
 import os.path
 import coder
@@ -13,9 +14,9 @@ with open(headderpath) as f:
 
 filepath = os.path.abspath(sys.argv[1])
 with open(filepath) as f:
-    line = f.readline()
+    line = f.readline()  # type: str
     while line:
-        c = coder.Coder(line)
+        c = coder.Coder(line.rstrip())
         print(c.code(), end="")
         line = f.readline()
 print("\n")

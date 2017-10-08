@@ -1,92 +1,89 @@
-import re
+from template import Template
+from typing import Union, List
 
 
-class Parser:
-    tagdict = {"f": "frame",
-               "b": "block",
-               "i": "itemize",
-               "e": "enumerate",
-               "m": "align",
-               "p": "pure"}
-    tag = list()
-    level = 0
-    gein = 0
-    newtag = tuple()
-    text = None
+Marker = Union[str, bool]
+TagList = List[str]
 
-    def __new__(cls, text):
-        cls.level += cls.gein
-        if cls.newtag != tuple():
-            cls.tag.append(cls.newtag)
-        cls.gein = 0
-        cls.newtag = tuple()
-        cls.text = None
-        return super().__new__(cls)
 
-    def __init__(self, text):
-        self.text_ = text.rstrip()
-        self.update_level()
-        self.update_tag()
-        self.__class__.text = self.show_text()
+class Parser(Template):
+    tag = list()  # type: TagList
+    befor_tag = str()
+    befor_level = int()
+    now_tag = str()
+    now_level = int()
+    gain = int()
 
-    def update_level(self):
-        if self.find_blankline():
-            return 0
-        else:
-            head = bool(self.find_headder())
-            indent = self.get_indent()
-            newlevel = head + indent
-            self.__class__.gein = newlevel - self.__class__.level
-            return self.__class__.gein
+    def __new__(cls, *args):
+        instance = super().__new__(cls)
+        if not cls.tag:
+            cls.tag.append(cls.markers["0"])
+        return instance
 
-    def update_tag(self):
-        match = self.find_headder()
-        newlevel = self.__class__.level + self.__class__.gein
-        if newlevel == 0:
-            self.__class__.newtag = ("pure",)
-            return self.__class__.newtag
-        rtn = list()
-        if match:
-            pretag = match.group()
-            if pretag == ":":
-                if newlevel == 1:
-                    pretag += "f"
-                if newlevel == 2:
-                    pretag += "b"
-            for t in pretag[1:]:
-                rtn.append(self.tagdict[t])
-            self.__class__.newtag = tuple(rtn)
-            return self.__class__.newtag
-        else:
-            return tuple()
+    def __init__(self, text: str) -> None:
+        self.indent = self.init_indent(text)
+        self.marker = self.init_marker(text)
+        self.text = self.init_text(text, self.marker)
+        if not self.blankline():
+            self.update_level(self.indent, self.marker)
+            self.update_gain()
+            self.update_tag(self.marker)
 
-    def find_headder(self):
-        return re.search(r":[fbmiep]*$", self.text_)
+    def init_indent(self, text: str) -> int:
+        return len(text) - len(text.lstrip())
 
-    def find_blankline(self):
-        if re.search(r"^\s*$", self.text_):
-            return True
+    def init_marker(self, text: str) -> Marker:
+        split = text.rsplit(":", 1)
+        if len(split) == 2:
+            return split[1] if split[1] is not "" else True
         else:
             return False
 
-    def get_indent(self):
-        match = re.search(r"^\s*", self.text_)
-        if match.group():
-            return len(match.group()) // 4
+    def init_text(self, text: str, marker: Marker) -> str:
+        strip = text.lstrip()
+        if marker is not None:
+            return strip.rsplit(":", 1)[0]
         else:
-            return 0
+            return strip
 
-    def show_text(self):
-        return re.sub(r":[fbmiep]*", "", self.text_).lstrip()
+    def blankline(self) -> bool:
+        return not any((self.text, self.marker))
 
-    def __str__(self):
-        param = ("{:-^30}\n".format(self.text_),
-                 "text:{}\n".format(self.text),
-                 "level:{}\n".format(self.level),
-                 "gein:{}\n".format(self.gein),
-                 "tag:{}\n".format(self.tag),
-                 "newtag:{}\n".format(self.newtag))
-        return "".join(param)
+    @classmethod
+    def update_tag(cls, marker: Marker) -> None:
+        if cls.now_tag != str():
+            cls.tag.append(cls.now_tag)
+        cls.befor_tag = cls.now_tag
+        if marker is True:
+            cls.now_tag = cls.markers[str(cls.now_level)]
+        elif isinstance(marker, str):
+            cls.now_tag = cls.markers[marker]
+        else:
+            cls.now_tag = str()
+
+    @classmethod
+    def update_level(cls, indent: int, marker: Marker) -> None:
+        cls.befor_level = cls.now_level
+        cls.now_level = indent // 4 + bool(marker)
+
+    @classmethod
+    def update_gain(cls) -> None:
+        cls.gain = cls.now_level - cls.befor_level
+
+    @classmethod
+    def tag_pop(cls):
+        try:
+            return cls.tag.pop()
+        except IndexError:
+            return cls.markers["0"]
+
+    def __str__(self) -> str:
+        param = ("text:{}".format(self.text),
+                 "level:{}".format(self.now_level),
+                 "gein:{}".format(self.gain),
+                 "tag:{}".format(self.tag),
+                 "now_tag:{}".format(self.now_tag))
+        return "\n".join(param)
 
 
 if __name__ == "__main__":
@@ -96,4 +93,5 @@ if __name__ == "__main__":
             "headline:",
             "    hoge:i",)
     for t in test:
+        print("{:=^50}".format(t))
         print(Parser(t))
