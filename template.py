@@ -1,5 +1,5 @@
 from csv import DictReader
-from os.path import exists
+from os.path import exists, abspath, dirname, join
 from typing import Dict
 
 
@@ -21,9 +21,10 @@ class Template:
 
     @classmethod
     def load(cls) -> None:
-        if not exists("format.csv"):
+        format_path = join(dirname(abspath(__file__)), "format.csv")
+        if not exists(format_path):
             raise FileNotFoundError
-        with open("format.csv", newline="") as f:
+        with open(format_path, newline="") as f:
             reader = DictReader(f)
             for plain_data in reader:
                 data = cls.parse(plain_data)

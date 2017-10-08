@@ -1,22 +1,25 @@
 #! /usr/bin/env python3
-import sys
-import os.path
-import coder
+from sys import argv, path
+from os.path import abspath, dirname, join
+
+script_path = abspath(__file__)
+script_dir = dirname(script_path)
+path.append(script_dir)
+
+from coder import Coder  # noqa
 
 
-scriptpath = os.path.dirname(__file__)
-headderpath = os.path.abspath(os.path.join(scriptpath, "headder_"))
-with open(headderpath) as f:
+headder_path = abspath(join(script_dir, "headder_"))
+with open(headder_path) as f:
     line = f.readline()
     while line:
         print(line, end="")
         line = f.readline()
 
-filepath = os.path.abspath(sys.argv[1])
+filepath = abspath(argv[1])
 with open(filepath) as f:
     line = f.readline()  # type: str
     while line:
-        c = coder.Coder(line.rstrip())
+        c = Coder(line.rstrip())
         print(c.code(), end="")
         line = f.readline()
-print("\n")
