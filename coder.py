@@ -1,4 +1,4 @@
-from parser import Parser
+from pyresentation.parser import Parser
 
 
 class Coder(Parser):

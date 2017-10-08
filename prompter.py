@@ -1,6 +1,5 @@
 from csv import DictReader
 from os.path import exists
-from pprint import PrettyPrinter
 
 
 class Prompter:
@@ -42,11 +41,12 @@ class Prompter:
 
 
 if __name__ == "__main__":
+    from pprint import PrettyPrinter
     Prompter()
     text = "{:X^10}".format("test")
     w = 4 * " "
     pp = PrettyPrinter()
-    pp.pprint(Prompter.__dict__)
+    # pp.pprint(Prompter.__dict__)
     print("{:!^50}\n\n\n".format("format test"))
     for key in Prompter.tag:
         print("\n\n\n{:=^50}\n".format(key))
