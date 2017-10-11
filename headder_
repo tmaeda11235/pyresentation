@@ -1,109 +1,150 @@
-\documentclass[unicode, 12pt, aspectratio=169]{beamer}
+\documentclass[unicode, 10pt, aspectratio=1610, t]{beamer}
 
 
-
+%package
 \usepackage{luatexja}
-\usepackage{ifxetex,ifluatex}
+\usepackage{luatexja-fontspec}
 \usepackage{unicode-math}
-\usepackage{graphicx, amsmath, cite, ascmac, amsfonts}
-\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{graphicx, xcolor, amsmath, cite, ascmac, amsfonts}
+
+
+%theme
 \usetheme{default}
 \usecolortheme{dove}
 
-\setbeamerfont{title}{size*={22}{28}}%
-\setbeamerfont{author}{size*={14}{16}}%
-\setbeamerfont{institute}{size*={13}{15}}%
-\setbeamertemplate{title page}{}
-\addtobeamertemplate{title page}{%
-    \begin{beamercolorbox}[center]{title}%
-        \newline%
-        \usebeamerfont{title}\inserttitle\newline\newline\newline\newline%
-        \usebeamerfont{author}\insertauthor\newline\newline%
-        \usebeamerfont{institute}\insertinstitute\newline\newline%
-        \usebeamerfont{normal text}\insertdate%
-    \end{beamercolorbox}
-}
-
-\setbeamertemplate{frametitle}{%
-    \begin{center}%
-        \insertframetitle%
-    \end{center}
-}
-\setbeamerfont{frametitle}{size={\fontsize{18}{14}}}
-
-\setbeamertemplate{navigation symbols}{}
-\addtobeamertemplate{navigation symbols}{}{%
-    \usebeamerfont{footline}%
-    \usebeamercolor[fg]{footline}%
-    {\ifnum\value{page}=1%
-        {}%
-    \else%
-        {\insertframenumber}%
-    \fi}%
-    \hspace{.5em}%
-    \vspace{.5em}
-}
-
-\setbeamertemplate{framesubtitle}
-{\underline{\insertframesubtitle}
-}
-\setbeamerfont{framesubtitle}{series=\bfseries}
-
-\setbeamertemplate{framesubsubtitle}
-{\underline{\insertframesubsubtitle}
-}
-
-\setbeamertemplate{enumerate item}{}
-\addtobeamertemplate{enumerate item}{}{%
-    \usebeamerfont{normal text}%
-    \usebeamercolor[fg]{normal text}%
-    {(}\insertenumlabel{)}
-}
-
-\setbeamertemplate{enumerate subitem}{}
-\addtobeamertemplate{enumerate subitem}{}{%
-    \usebeamerfont{normal text}%
-    \usebeamercolor[fg]{normal text}%
-    {(}\Alph{enumii}{)}
-}
-
-\setbeamertemplate{enumerate subsubitem}{}
-\addtobeamertemplate{enumerate subsubitem}{}{%
-    \usebeamerfont{normal text}%
-    \usebeamercolor[fg]{normal text}%
-    {(}\alph{enumiii}{)}
-}
-
-\setbeamercolor{footline}{fg=black}
-\setbeamerfont{footline}{size={\fontsize{12}{12}}}
-
-\setbeamerfont{block body}{size={\fontsize{12}{12}}}
-
-\setbeamerfont{item}{size={\fontsize{12}{12}}}
-
-\setbeamerfont{itemize item}{size*={12}{12}}
-\setbeamerfont{itemize subitem}{size*={12}{12}}
-\setbeamerfont{itemize subsubitem}{size*={12}{12}}
-
-\setbeamerfont{itemize/enumerate body}{size*={12}{12}}
-\setbeamerfont{itemize/enumerate subbody}{size*={12}{12}}
-\setbeamerfont{itemize/enumerate subsubbody}{size*={12}{12}}
-
-\setbeamercolor{alerted text}{fg=red}
-\newcommand{\boxalert}[1]{{%
-    \usebeamerfont{normal text}%
-    \usebeamercolor[fg]{alerted text}%
-    \underline{#1}
-}}
-
-%\setbeamerfont{enumerate item}{size={\fontsize{12}{12}}}
-
-%\setbeamerfont{block title}{size={\fontsize{12}{12}}}
-
-\setbeamerfont{normal text}{size={\fontsize{12}{12}}}
 
 
 
+%font
+    %main font
+    \setmainfont{NotoSans}
+    \setmainjfont{NotoSansCJKJP}
+
+    %base font class
+    \setbeamerfont{normal text}{size*={10}{0}}
+    \setbeamerfont{title}{size*={40}{10}, parent={normal text}}
+
+        %title page
+        \setbeamerfont{author}{size*={14}{16}, parent={normal text}}
+        \setbeamerfont{institute}{size*={13}{15}, parent={normal text}}
+
+        %frame
+        \setbeamerfont{frametitle}{size*={18}{0}, parent={title}}
+        \setbeamerfont{framesubtitle}{size*={15}{15} parent={frametitle}}
+        \setbeamerfont{frame body}{parent={normal text}, family*=SourceHanSerif}
+        \setbeamerfont{footline}{size*={12}{0}, parent={normal text}}
+
+        %block
+        \setbeamerfont{block title}{size*={15}{0}, parent={title}}
+        \setbeamerfont{block body}{parent={frame body}}
+
+        %itemize
+        \setbeamerfont{item}{size*={12}{0}, parent={normal text}}
+        \setbeamerfont{itemize item}{parent={item}}
+        \setbeamerfont{itemize subitem}{parent={item}}
+        \setbeamerfont{itemize subsubitem}{parent={item}}
+        \setbeamerfont{itemize/enumerate body}{parent={item}}
+        \setbeamerfont{itemize/enumerate subbody}{parent={item}}
+        \setbeamerfont{itemize/enumerate subsubbody}{parent={item}}
+
+
+
+%color
+    %theme color
+    \definecolor{Light}{RGB}{247 243 227}
+    \definecolor{Heavy}{RGB}{3 16 17}
+    \definecolor{Primecolor}{RGB}{37 65 178}
+    \definecolor{Secondcolor}{RGB}{84 222 243}
+    \definecolor{Tertiarycolor}{RGB}{9 58 62}
+    \definecolor{Accent}{RGB}{203 72 122}
+
+    %base color class
+    \setbeamercolor{normal text}{fg=Heavy, bg=Light}
+    \setbeamercolor{example text}{fg=Primecolor, bg=Light}
+    \setbeamercolor{titlelike}{fg=Accent, bg=Light}
+    \setbeamercolor{separation line}{fg=Secondcolor, bg=Light}
+
+        %specific
+        \setbeamercolor{frametitle}{fg=Heavy, bg=Secondcolor!10!Light}
+        \setbeamercolor{new box}{fg=Heavy, bg=Heavy}
+
+%template
+    \setbeamertemplate{navigation symbols}{}
+    \addtobeamertemplate{navigation symbols}{}{
+        \usebeamerfont{footline}
+        \usebeamercolor[fg]{footline}
+        {\ifnum\value{page}=1
+            {}
+        \else
+            {\insertframenumber}
+        \fi}
+        \hspace{.5em}
+        \vspace{.5em}
+    }
+
+    \setbeamertemplate{title page}{}
+    \addtobeamertemplate{title page}{
+        \begin{beamercolorbox}[left]{title}
+            \newline
+            \usebeamerfont{title}\inserttitle\newline\newline\newline\newline
+            \usebeamerfont{author}\insertauthor\newline\newline
+            \usebeamerfont{institute}\insertinstitute\newline\newline
+            \usebeamerfont{normal text}\insertdate
+        \end{beamercolorbox}
+    }
+
+    \setbeamertemplate{frametitle}{
+        \vspace{1em}
+        \insertframetitle
+    }
+
+    \setbeamertemplate{block begin}{
+        \usebeamerfont{block title}
+        \usebeamercolor{block title}
+        \insertblocktitle\\
+        \usebeamerfont{block body}
+        \usebeamercolor{block body}
+        \begin{beamercolorbox}[wd=1pt, dp=1pt, leftskip=3pt]{new box}
+    }
+
+    \setbeamertemplate{block end}{
+        \end{beamercolorbox}
+    }
+
+
+    \setbeamertemplate{framesubtitle}{
+        \underline{\insertframesubtitle}
+    }
+
+    \setbeamertemplate{enumerate item}{}
+    \addtobeamertemplate{enumerate item}{}{
+        \usebeamerfont{normal text}
+        \usebeamercolor[fg]{normal text}
+        {(}\insertenumlabel{)}
+    }
+
+    \setbeamertemplate{enumerate subitem}{}
+    \addtobeamertemplate{enumerate subitem}{}{
+        \usebeamerfont{normal text}
+        \usebeamercolor[fg]{normal text}
+        {(}\Alph{enumii}{)}
+    }
+
+    \setbeamertemplate{enumerate subsubitem}{}
+    \addtobeamertemplate{enumerate subsubitem}{}{
+        \usebeamerfont{normal text}
+        \usebeamercolor[fg]{normal text}
+        {(}\alph{enumiii}{)}
+    }
+
+    \newcommand{\boxalert}[1]{{
+        \usebeamerfont{normal text}
+        \usebeamercolor[fg]{alerted text}
+        \underline{#1}
+    }}
+
+
+%other command
 \makeatletter
 \newcommand{\tref}[1]{Table.~\ref{#1}}
 \newcommand{\eref}[1]{Eq.~(\ref{#1})}

@@ -35,9 +35,13 @@ class Parser(Template):
     def init_marker(self, text: str) -> Marker:
         split = text.rsplit(":", 1)
         if len(split) == 2:
-            return split[1] if split[1] is not "" else True
-        else:
-            return False
+            if split[-1] in self.markers:
+                return split[-1]
+            elif split[-1] is str():
+                return True
+        # len(split) == 1 (not contin ":")
+        # not split[-1] in markers (contain ":" but normal use case).
+        return None
 
     def init_text(self, text: str, marker: Marker) -> str:
         strip = text.lstrip()
@@ -91,7 +95,8 @@ if __name__ == "__main__":
             "     ",
             "heyper heyper",
             "headline:",
-            "    hoge:i",)
+            "    hoge:i",
+            "        it is normal use of \":\" :isn't it?")
     for t in test:
         print("{:=^50}".format(t))
         print(Parser(t))
