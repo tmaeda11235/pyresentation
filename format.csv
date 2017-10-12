@@ -8,4 +8,4 @@ block,b,\begin{block}{@text},@text,\\,\end{block}
 itemize,i,@text@@\begin{itemize},\item @text,,\end{itemize}
 enumerate,e,@text@@\begin{enumerate},\item @text,,\end{enumerate}
 align,m,@text@@\begin{flalign*},&@text&,\\,\end{flalign*}
-graphics,g,\includegraphics{@text},,,
+graphics,g,\includegraphics[width=5cm]{@text},,,

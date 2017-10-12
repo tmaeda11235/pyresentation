@@ -22,20 +22,20 @@
 
     %base font class
     \setbeamerfont{normal text}{size*={10}{0}}
-    \setbeamerfont{title}{size*={40}{10}, parent={normal text}}
 
         %title page
+        \setbeamerfont{title}{size*={40}{10}, parent={normal text}}
         \setbeamerfont{author}{size*={14}{16}, parent={normal text}}
         \setbeamerfont{institute}{size*={13}{15}, parent={normal text}}
 
         %frame
-        \setbeamerfont{frametitle}{size*={18}{0}, parent={title}}
+        \setbeamerfont{frametitle}{size*={18}{0}, parent={normal text}}
         \setbeamerfont{framesubtitle}{size*={15}{15} parent={frametitle}}
         \setbeamerfont{frame body}{parent={normal text}, family*=SourceHanSerif}
         \setbeamerfont{footline}{size*={12}{0}, parent={normal text}}
 
         %block
-        \setbeamerfont{block title}{size*={15}{0}, parent={title}}
+        \setbeamerfont{block title}{size*={15}{0}, parent={frame title}}
         \setbeamerfont{block body}{parent={frame body}}
 
         %itemize
@@ -51,7 +51,7 @@
 
 %color
     %theme color
-    \definecolor{Light}{RGB}{247 243 227}
+    \definecolor{Light}{RGB}{247 243 237}
     \definecolor{Heavy}{RGB}{3 16 17}
     \definecolor{Primecolor}{RGB}{37 65 178}
     \definecolor{Secondcolor}{RGB}{84 222 243}
@@ -65,7 +65,9 @@
     \setbeamercolor{separation line}{fg=Secondcolor, bg=Light}
 
         %specific
-        \setbeamercolor{frametitle}{fg=Heavy, bg=Secondcolor!10!Light}
+        \setbeamercolor{title}{fg=Heavy, bg=Light}
+        \setbeamercolor{frametitle}{parent={title}}
+        \setbeamercolor{block body}{parent={normal text}}
         \setbeamercolor{new box}{fg=Heavy, bg=Heavy}
 
 %template
@@ -99,16 +101,18 @@
     }
 
     \setbeamertemplate{block begin}{
-        \usebeamerfont{block title}
-        \usebeamercolor{block title}
+        \vspace{2pt}
+        \begin{beamercolorbox}{block title}
         \insertblocktitle\\
-        \usebeamerfont{block body}
-        \usebeamercolor{block body}
-        \begin{beamercolorbox}[wd=1pt, dp=1pt, leftskip=3pt]{new box}
+        \end{beamercolorbox}
+        \begin{beamercolorbox}[wd=0.9\textwidth, dp=-1pt, leftskip=3pt]{new box}
+        \begin{beamercolorbox}{block body}
     }
 
     \setbeamertemplate{block end}{
         \end{beamercolorbox}
+        \end{beamercolorbox}
+        \vspace{3pt}
     }
 
 

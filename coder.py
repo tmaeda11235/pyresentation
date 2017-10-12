@@ -12,16 +12,24 @@ class Coder(Parser):
         w = self.white_space
         text = self.text
         if self.gain < 0:
-            rtn = []
-            for i in range(abs(self.gain), 0, -1):
-                rtn.append("\n" + w(i - 1))  # making indent. "-1" is normaliser.
-                oldtag = self.tag_pop()
-                template = self.tag_end[oldtag]
-                rtn.append(template.format(w(i), text))
+            rtn = ["\n"]
+            if self.marker:
+                for i in range(abs(self.gain) + 1, 0, -1):
+                    rtn.append(w(i - 1))  # making indent. "-1" is normaliser.
+                    oldtag = self.tag_pop()
+                    template = self.tag_end[oldtag]
+                    rtn.append(template.format(w(i), text))
+            else:
+                for i in range(abs(self.gain), 0, -1):
+                    rtn.append(w(i - 1))  # making indent. "-1" is normaliser.
+                    oldtag = self.tag_pop()
+                    template = self.tag_end[oldtag]
+                    rtn.append(template.format(w(i), text))
             return "".join(rtn)
+
         elif self.gain == 0:
             if self.now_tag:
-                return self.tag_end[self.tag_pop()].format(w(), text)
+                return "\n" + w() + self.tag_end[self.tag_pop()].format(w(), text)
             elif self.befor_tag:
                 return "\n"
             else:
