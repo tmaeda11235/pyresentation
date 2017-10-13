@@ -1,4 +1,4 @@
-from template import Template
+from reader.template import Template
 from typing import Union, List
 
 

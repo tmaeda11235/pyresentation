@@ -7,7 +7,7 @@ script_path = abspath(__file__)
 script_dir = dirname(script_path)
 path.append(script_dir)
 
-from coder import Coder  # noqa
+from reader.coder import Coder  # noqa
 
 
 headder_path = abspath(join(script_dir, "headder_"))
