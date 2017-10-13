@@ -37,12 +37,10 @@ class ControlButtons(tk.Frame):
         self.save.pack(side="left")
 
     def get_file(self):
-        self.filename = fdlog.askopenfilename(filetype=(("text", "*.txt"),
-                                                        ("off side text", "*.ost"),
-                                                        ("all files", "*.*")))
+        self.filename = fdlog.askopenfilename()
 
     def save_file(self):
-        fname = fdlog.asksaveasfilename(filetype=(("tex file", "*.tex"), ("all files", "*.*")))
+        fname = fdlog.asksaveasfilename()
         with open(fname, mode="w", encoding="utf-8")as f:
             f.write("".join(self.compile))
 
